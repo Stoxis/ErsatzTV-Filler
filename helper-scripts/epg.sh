@@ -65,7 +65,7 @@ actualstarttime=$(date --date="$starttime" +%I:%M%p)
 cut -f 2 $workdir/xmltemp3$xmltvloop.txt > $workdir/xmltemp45$xmltvloop.txt
 cut -d " " -f 1 $workdir/xmltemp45$xmltvloop.txt > $workdir/xmltemp5$xmltvloop.txt
 nextshow=$(cat $workdir/xmltemp5$xmltvloop.txt)
-cut -d "//" -f 2 $workdir/xmltemp45$xmltvloop.txt > $workdir/xmltemp6$xmltvloop.txt
+cut -d "/" -f 3 $workdir/xmltemp45$xmltvloop.txt > $workdir/xmltemp6$xmltvloop.txt
 nextepisode=$(cat $workdir/xmltemp6$xmltvloop.txt)
 
 echo    $starttime:  $nextshow  -  >> $workdir/upnext$xmltvloop.txt
