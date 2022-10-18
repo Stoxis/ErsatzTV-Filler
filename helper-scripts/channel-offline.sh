@@ -97,10 +97,12 @@ xmltvloop=$(head -n 1 $workdir/xmlfiles4.txt)
 done
 
 rm -r $workdir/xmltv/*
+rm -f $workdir/tempxml*.xml
 
 ./epg.sh
 
 else
   rm -r $workdir/xmltv/*
+  rm -f $workdir/tempxml*.xml
 ./epg.sh
 fi
