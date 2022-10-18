@@ -70,7 +70,7 @@ mv $workdir/tempxml$xmltvloop.xml $workdir/upnext$xmltvloop.txt
 
 #news backgound
 #background colour randomiser
-if [[ $nofflinebackgroundcolour == random ]]
+if [[ $offlinebackgroundcolour == random ]]
 then
 #awk 'BEGIN{srand()}{print rand(), $0}' $workdir/colours.txt | sort -n -k 1 | awk 'sub(/\S* /,"")'
 #newsbackgroundrandomNumber=$(shuf -i 1-140 -n 1 --repeat)
@@ -93,7 +93,7 @@ fi
 
 
 
-ffmpeg -y -f lavfi -i color=$$offlinebackgroundcolour:$videoresolution:5 -stream_loop -1 -i $offlineaudio -shortest -vf "drawtext=textfile='$workdir/upnext$xmltvloop.txt': fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf: x=(w-text_w)/3:y=(h-text_h)/2: fontcolor=$offlinetextcolour1: fontsize=W/40:"  -pix_fmt yuv420p -c:a copy -t 00:00:05.000 $output/epg/$xmltvloop.mp4
+ffmpeg -y -f lavfi -i color=$offlinebackgroundcolour:$videoresolution -stream_loop -1 -i $offlineaudio -shortest -vf "drawtext=textfile='$workdir/upnext$xmltvloop.txt': fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf: x=(w-text_w)/3:y=(h-text_h)/2: fontcolor=$offlinetextcolour1: fontsize=W/40:"  -pix_fmt yuv420p -c:a copy -t 00:00:05.000 $output/epg/$xmltvloop.mp4
 touch $output/channel-resuming/$xmltvloop.mp4
 awk 'NR>1' $workdir/xmlfiles4.txt > $workdir/xmllll.txt && mv $workdir/xmllll.txt $workdir/xmlfiles4.txt
 
