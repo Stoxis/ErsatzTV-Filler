@@ -190,7 +190,7 @@ if [[ -z $processepg ]];
 then
   echo processepg=yes >> $helperdir/config-temp.conf
 else
-  echo processepg=$processchanneloffline >> $helperdir/config-temp.conf
+  echo processepg=$processchannelepg >> $helperdir/config-temp.conf
 fi
 #set duration correctly
 #ffmpegvideolength=$(date -d@$videolength -u +%H:%M:%S)
