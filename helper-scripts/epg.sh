@@ -64,7 +64,7 @@ offlineaudio=$(head -n $randomNumberoffline $workdir/music.txt | tail -n 1)
 tv_to_text --output $workdir/tempxml$xmltvloop.xml $workdir/xmltv/$xmltvloop.xml
 tail -n +3 "$workdir/tempxml$xmltvloop.xml" > "$workdir/tempxml$xmltvloop.xml.tmp" && mv "$workdir/tempxml$xmltvloop.xml.tmp" "$workdir/tempxml$xmltvloop.xml"
 tail -n 10 "$workdir/tempxml$xmltvloop.xml" > "$workdir/tempxml$xmltvloop.xml.tmp" && mv "$workdir/tempxml$xmltvloop.xml.tmp" "$workdir/tempxml$xmltvloop.xml"
-
+mv $workdir/tempxml$xmltvloop.xml $workdir/tempxml$xmltvloop.txt
 
 
 
@@ -93,7 +93,7 @@ fi
 
 
 
-ffmpeg -y -f lavfi -i color=$offlinebackground1:$videoresolution -stream_loop -1 -i $offlineaudio -shortest -vf "drawtext=textfile=$workdir/tempxml$xmltvloop.xml: fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf: x=(w-text_w)/2:y=(h-text_h)/2: fontcolor=$offlinetextcolour1: fontsize=W/40:"  -pix_fmt yuv420p -c:a copy -t 00:00:05.000 $output/epg/$xmltvloop.mp4
+ffmpeg -y -f lavfi -i color=$offlinebackground1:$videoresolution -stream_loop -1 -i $offlineaudio -shortest -vf "drawtext=textfile=$workdir/tempxml$xmltvloop.txt: fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf: x=(w-text_w)/2:y=(h-text_h)/2: fontcolor=$offlinetextcolour1: fontsize=W/40:"  -pix_fmt yuv420p -c:a copy -t 00:00:05.000 $output/epg/$xmltvloop.mp4
 touch $output/channel-resuming/$xmltvloop.mp4
 awk 'NR>1' $workdir/xmlfiles4.txt > $workdir/xmllll.txt && mv $workdir/xmllll.txt $workdir/xmlfiles4.txt
 
