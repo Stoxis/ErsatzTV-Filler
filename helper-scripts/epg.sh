@@ -63,7 +63,7 @@ offlineaudio=$(head -n $randomNumberoffline $workdir/music.txt | tail -n 1)
 tv_to_text --output $workdir/tempxml$xmltvloop.xml $workdir/xmltv/$xmltvloop.xml
 tail -n +3 "$workdir/tempxml$xmltvloop.xml" > "$workdir/tempxml$xmltvloop.xml.tmp" && mv "$workdir/tempxml$xmltvloop.xml.tmp" "$workdir/tempxml$xmltvloop.xml"
 tail -n 10 "$workdir/tempxml$xmltvloop.xml" > "$workdir/tempxml$xmltvloop.xml.tmp" && mv "$workdir/tempxml$xmltvloop.xml.tmp" "$workdir/tempxml$xmltvloop.xml"
-sed -i.bak 's/\t/     /g' $workdir/tempxml$xmltvloop.xml
+sed -i.bak 's/\t/ - /g' $workdir/tempxml$xmltvloop.xml
 mv $workdir/tempxml$xmltvloop.xml $workdir/upnext$xmltvloop.txt
 
 
