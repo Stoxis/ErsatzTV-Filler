@@ -12,6 +12,8 @@ fi
 processepg1=$(echo $processepg | tr '[:upper:]' '[:lower:]')
 if [[ $processepg1 = yes ]]
 then
+
+  echo epg
 #channel Currently offline
 
 #make sure workdir/xmltv exists
