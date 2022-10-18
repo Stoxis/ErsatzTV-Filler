@@ -4,6 +4,16 @@
 . config-temp.conf
 #test variable run yes/no
 #convert variable to lowercase
+
+#make sure workdir/xmltv exists
+if [ ! -d $workdir/xmltv ]; then
+  mkdir -p $workdir/xmltv;
+fi
+
+if [ ! -d $output/epg ]; then
+  mkdir -p $output/epg;
+fi
+
 if [[ ! -z "$ETV_FILLER_DOCKER" ]];
 then
   output=/output
