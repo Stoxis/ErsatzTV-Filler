@@ -52,7 +52,7 @@ offlineaudio=$(head -n $randomNumberoffline $workdir/music.txt | tail -n 1)
 
 # get and read xmltv data
 tv_to_text --output $workdir/tempxml$xmltvloop.xml $workdir/xmltv/$xmltvloop.xml
-cut -d "-" -f 1 $workdir/xmltemp3$xmltvloop.txt > $workdir/xmltemp4$xmltvloop.txt
+cut -d "-" -f 1 $workdir/xmltemp$xmltvloop.txt > $workdir/xmltemp4$xmltvloop.txt
 
 #news backgound
 #background colour randomiser
