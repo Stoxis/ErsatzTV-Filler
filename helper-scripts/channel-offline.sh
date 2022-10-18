@@ -96,11 +96,11 @@ awk 'NR>1' $workdir/xmlfiles4.txt > $workdir/xmllll.txt && mv $workdir/xmllll.tx
 xmltvloop=$(head -n 1 $workdir/xmlfiles4.txt)
 done
 
-rm -f $workdir/xmltv/*
+rm -r $workdir/xmltv/*
 
 ./epg.sh
 
 else
-  rm -f $workdir/xmltv/*
+  rm -r $workdir/xmltv/*
 ./epg.sh
 fi

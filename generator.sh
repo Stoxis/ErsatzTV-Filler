@@ -186,7 +186,7 @@ then
 else
   echo processchanneloffline=$processchanneloffline >> $helperdir/config-temp.conf
 fi
-if [[ -z $processchanneloffline ]];
+if [[ -z $processepg ]];
 then
   echo processepg=yes >> $helperdir/config-temp.conf
 else
