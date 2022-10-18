@@ -9,8 +9,8 @@ then
   output=/output
 fi
 
-processchanneloffline1=$(echo $processchanneloffline | tr '[:upper:]' '[:lower:]')
-if [[ $processchanneloffline1 = yes ]]
+processepg1=$(echo $processepg | tr '[:upper:]' '[:lower:]')
+if [[ $processepg1 = yes ]]
 then
 #channel Currently offline
 
@@ -50,15 +50,7 @@ offlineaudio=$(head -n $randomNumberoffline $workdir/music.txt | tail -n 1)
 
 # get and read xmltv data
 tv_to_text --output $workdir/tempxml$xmltvloop.xml $workdir/xmltv/$xmltvloop.xml
-awk '/news/{p=1}p' $workdir/tempxml$xmltvloop.xml > $workdir/xmltemp$xmltvloop.txt
-awk '!/news/' $workdir/xmltemp$xmltvloop.txt > $workdir/xmltemp2$xmltvloop.xml
-head -1 $workdir/xmltemp2$xmltvloop.xml > $workdir/xmltemp3$xmltvloop.txt
-cut -d "-" -f 1 $workdir/xmltemp3$xmltvloop.txt > $workdir/xmltemp4$xmltvloop.txt
-starttime=$(cat $workdir/xmltemp4$xmltvloop.txt)
-actualstarttime=$(date --date="$starttime" +%I:%M%p)
-cut -f 2 $workdir/xmltemp3$xmltvloop.txt > $workdir/xmltemp45$xmltvloop.txt
-cut -d " " -f 1 $workdir/xmltemp45$xmltvloop.txt > $workdir/xmltemp5$xmltvloop.txt
-nextshow=$(cat $workdir/xmltemp5$xmltvloop.txt)
+
 
 #news backgound
 #background colour randomiser
@@ -83,11 +75,7 @@ else
 offlinetextcolour1=$offlinetextcolour
 fi
 
-echo    This Channel is Currently offline >> $workdir/upnext$xmltvloop.txt
-echo >> $workdir/upnext.txt
-echo       Next showing at: $starttime >> $workdir/upnext$xmltvloop.txt
-echo >> $workdir/upnext.txt
-echo    Starting With: $nextshow >> $workdir/upnext$xmltvloop.txt
+
 
 ffmpeg -y -f lavfi -i color=$offlinebackground1:$videoresolution -stream_loop -1 -i $offlineaudio -shortest -vf "drawtext=textfile='$workdir/upnext$xmltvloop.txt': fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf: x=(w-text_w)/2:y=(h-text_h)/2: fontcolor=$offlinetextcolour1: fontsize=W/40:"  -pix_fmt yuv420p -c:a copy -t 00:00:05.000 $output/channel-resuming/$xmltvloop.mp4
 touch $output/channel-resuming/$xmltvloop.mp4
@@ -96,11 +84,8 @@ awk 'NR>1' $workdir/xmlfiles4.txt > $workdir/xmllll.txt && mv $workdir/xmllll.tx
 xmltvloop=$(head -n 1 $workdir/xmlfiles4.txt)
 done
 
-rm -r $workdir/xmltv/*
-
-./epg.sh
+./autoupdate.sh
 
 else
-  rm -r $workdir/xmltv/*
-./epg.sh
+./autoupdate.sh
 fi
