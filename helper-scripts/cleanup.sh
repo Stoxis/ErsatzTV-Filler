@@ -7,6 +7,6 @@
 #General cleanup
 
 rm -f $weatherdir/*
-rm -r $workdir/*
+#rm -r $workdir/*
 
 ./autoupdate.sh
