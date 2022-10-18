@@ -61,24 +61,11 @@ randomNumberoffline=$(shuf -i 1-36 -n 1 --repeat)
 offlineaudio=$(head -n $randomNumberoffline $workdir/music.txt | tail -n 1)
 
 # get and read xmltv data
-#tv_to_text --output $workdir/tempxml$xmltvloop.xml $workdir/xmltv/$xmltvloop.xml
-#tail -n +3 "$workdir/tempxml$xmltvloop.xml" > "$workdir/tempxml$xmltvloop.xml.tmp" && mv "$workdir/tempxml$xmltvloop.xml.tmp" "$workdir/tempxml$xmltvloop.xml"
-#tail -n 10 "$workdir/tempxml$xmltvloop.xml" > "$workdir/tempxml$xmltvloop.xml.tmp" && mv "$workdir/tempxml$xmltvloop.xml.tmp" "$workdir/tempxml$xmltvloop.xml"
-
 tv_to_text --output $workdir/tempxml$xmltvloop.xml $workdir/xmltv/$xmltvloop.xml
-awk '/news/{p=1}p' $workdir/tempxml$xmltvloop.xml > $workdir/xmltemp$xmltvloop.txt
-awk '!/news/' $workdir/xmltemp$xmltvloop.txt > $workdir/xmltemp2$xmltvloop.xml
-head -1 $workdir/xmltemp2$xmltvloop.xml > $workdir/xmltemp3$xmltvloop.txt
-cut -d "-" -f 1 $workdir/xmltemp3$xmltvloop.txt > $workdir/xmltemp4$xmltvloop.txt
-starttime=$(cat $workdir/xmltemp4$xmltvloop.txt)
-actualstarttime=$(date --date="$starttime" +%I:%M%p)
-cut -f 2 $workdir/xmltemp3$xmltvloop.txt > $workdir/xmltemp45$xmltvloop.txt
-cut -d " " -f 1 $workdir/xmltemp45$xmltvloop.txt > $workdir/xmltemp5$xmltvloop.txt
-nextshow=$(cat $workdir/xmltemp5$xmltvloop.txt)
-cut -d "/" -f 3 $workdir/xmltemp45$xmltvloop.txt > $workdir/xmltemp6$xmltvloop.txt
-nextepisode=$(cat $workdir/xmltemp6$xmltvloop.txt)
+tail -n +3 "$workdir/tempxml$xmltvloop.xml" > "$workdir/tempxml$xmltvloop.xml.tmp" && mv "$workdir/tempxml$xmltvloop.xml.tmp" "$workdir/tempxml$xmltvloop.xml"
+tail -n 10 "$workdir/tempxml$xmltvloop.xml" > "$workdir/tempxml$xmltvloop.xml.tmp" && mv "$workdir/tempxml$xmltvloop.xml.tmp" "$workdir/tempxml$xmltvloop.xml"
 
-echo    $starttime:  $nextshow  -  >> $workdir/upnext$xmltvloop.txt
+
 
 
 #news backgound
@@ -106,7 +93,7 @@ fi
 
 
 
-ffmpeg -y -f lavfi -i color=$offlinebackground1:$videoresolution -stream_loop -1 -i $offlineaudio -shortest -vf "drawtext=textfile='$workdir/upnext$xmltvloop.txt': fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf: x=(w-text_w)/2:y=(h-text_h)/2: fontcolor=$offlinetextcolour1: fontsize=W/40:"  -pix_fmt yuv420p -c:a copy -t 00:00:05.000 $output/epg/$xmltvloop.mp4
+ffmpeg -y -f lavfi -i color=$offlinebackground1:$videoresolution -stream_loop -1 -i $offlineaudio -shortest -vf "drawtext=textfile=$workdir/tempxml$xmltvloop.xml: fontfile=/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf: x=(w-text_w)/2:y=(h-text_h)/2: fontcolor=$offlinetextcolour1: fontsize=W/40:"  -pix_fmt yuv420p -c:a copy -t 00:00:05.000 $output/epg/$xmltvloop.mp4
 touch $output/channel-resuming/$xmltvloop.mp4
 awk 'NR>1' $workdir/xmlfiles4.txt > $workdir/xmllll.txt && mv $workdir/xmllll.txt $workdir/xmlfiles4.txt
 
